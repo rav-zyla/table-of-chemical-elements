@@ -3,6 +3,7 @@
   <input matInput [formControl]="searchControl" #input />
 </mat-form-field>
 
+@if( data$ | async ) {
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   @for (column of columns; track column.id) { @if(column.id === 'actions'){
   <ng-container [matColumnDef]="column.id">
@@ -23,7 +24,6 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-
-@if ( dataSource.data.length === 0 ) {
+} @if ( dataSource.data.length === 0 ) {
 <mat-spinner [diameter]="40" class="spinner-center"></mat-spinner>
 }
