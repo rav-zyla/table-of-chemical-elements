@@ -1,0 +1,29 @@
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput [formControl]="searchControl" #input />
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  @for (column of columns; track column.id) { @if(column.id === 'actions'){
+  <ng-container [matColumnDef]="column.id">
+    <th mat-header-cell *matHeaderCellDef>{{ column.name }}</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="editElement(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  } @else {
+  <ng-container [matColumnDef]="column.id">
+    <th mat-header-cell *matHeaderCellDef>{{ column.name }}</th>
+    <td mat-cell *matCellDef="let element">{{ element[column.id] }}</td>
+  </ng-container>
+  } }
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+@if ( dataSource.data.length === 0 ) {
+<mat-spinner [diameter]="40" class="spinner-center"></mat-spinner>
+}
